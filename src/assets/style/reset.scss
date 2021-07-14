@@ -1,0 +1,25 @@
+@import "./theme.scss";
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.body {
+  font-family: PingFang SC, Helvetica Neue, Helvetica, Arial, Hiragino Sans GB,
+    Microsoft Yahei, 微软雅黑, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #666;
+  font-size: 14px;
+}
+
+a {
+  font-style: normal;
+  text-decoration: none;
+  color: $dark-blue;
+  transition: all 0.15s ease-out;
+  &:hover {
+    color: $orange;
+  }
+}

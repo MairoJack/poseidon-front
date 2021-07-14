@@ -1,0 +1,10 @@
+.w {
+  width: 1320px;
+  margin: 0 auto;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
