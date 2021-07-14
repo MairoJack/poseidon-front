@@ -66,7 +66,6 @@ header {
       width: 70px;
       text-align: center;
       display: block;
-      font-size: 12px;
     }
   }
   .nav-aside {
@@ -76,7 +75,6 @@ header {
     margin-left: 10px;
     i {
       margin-top: 2px;
-      font-size: 12px;
       color: $orange;
     }
     a {

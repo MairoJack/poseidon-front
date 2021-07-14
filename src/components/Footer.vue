@@ -2,35 +2,45 @@
   <footer>
     <div class="w footer-box">
       <div class="site-info">
-        <ul>
-          <h3>波塞冬核心功能</h3>
+        <div>
+          <img src="logo1.png" />
+        </div>
+        <div>
+          <h5>波塞冬核心功能</h5>
           <ul>
             <li><a>Create Account</a></li>
             <li><a>Go to Premium</a></li>
             <li><a>Prefer A Friend</a></li>
             <li><a>Get Coupon Code</a></li>
           </ul>
-        </ul>
-        <ul>
-          <h3>服务与支持</h3>
+        </div>
+        <div>
+          <h5>服务与支持</h5>
           <ul>
             <li><a>Terms Condition</a></li>
             <li><a>Privacy & Policy</a></li>
             <li><a>Copyright Issue</a></li>
             <li><a>Get Help</a></li>
           </ul>
-        </ul>
-        <ul>
-          <h3>联系我们</h3>
+        </div>
+        <div>
+          <h5>联系我们</h5>
           <ul>
             <li><a>Become Teacher</a></li>
             <li><a>Become Student</a></li>
             <li><a>Become Both</a></li>
             <li><a>Partnership</a></li>
           </ul>
-        </ul>
+        </div>
+        <div>
+          <h5>扫码关注，了解更多</h5>
+          <img class="qrcode" src="qrcode.png" />
+        </div>
       </div>
-      <div class="copyright"></div>
+      <div class="copyright">
+        <small>Copyright© 2021 Poseidon</small>
+        <small>Go to To</small>
+      </div>
     </div>
   </footer>
 </template>
@@ -49,11 +59,46 @@ footer {
 }
 
 .footer-box {
-  width: 920px;
+  width: 820px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  background-color: green;
+  .site-info {
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    img {
+      width: 160px;
+      height: 70px;
+    }
+    h5 {
+      color: $light-blue;
+    }
+    ul {
+      margin-top: 15px;
+      li {
+        line-height: 25px;
+      }
+      a {
+        color: #7e8596;
+      }
+    }
+    .qrcode {
+      margin-top: 20px;
+      width: 64px;
+      height: 64px;
+    }
+  }
+  .copyright {
+    width: 100%;
+    margin-top: 40px;
+    display: flex;
+    justify-content: space-between;
+    small {
+      color: #fff;
+      font-weight: normal;
+    }
+  }
 }
 </style>
