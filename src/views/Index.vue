@@ -1,10 +1,8 @@
 <template>
   <Header></Header>
-  <router-view></router-view>
-  <br />
-  <br />
-  <br />
-  <br />
+  <div style="margin-top: 80px">
+    <router-view></router-view>
+  </div>
   <Footer></Footer>
 </template>
 
@@ -19,4 +17,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+Footer {
+  margin-top: 80px;
+}
+</style>

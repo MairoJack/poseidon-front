@@ -31,13 +31,18 @@
 <script></script>
 
 <style lang="scss" coped>
-@import "@/assets/style/theme.scss";
 .router-link-active {
   color: $orange;
 }
 header {
+  position: fixed;
+  background: #fff;
+  top: 0;
+  left: 0;
+  z-index: 999;
   width: 100%;
   height: 80px;
+  border-bottom: 1px solid $gray;
 }
 
 .header-box {

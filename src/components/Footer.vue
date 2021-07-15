@@ -39,7 +39,7 @@
       </div>
       <div class="copyright">
         <small>Copyright© 2021 Poseidon</small>
-        <small>Go to To</small>
+        <a>Go to To</a>
       </div>
     </div>
   </footer>
@@ -47,14 +47,13 @@
 
 <script></script>
 
-<style lang="scss" coped>
-@import "@/assets/style/theme.scss";
+<style lang="scss" scoped>
 .router-link-active {
   color: $orange;
 }
 footer {
   width: 100%;
-  height: 350px;
+  height: 270px;
   background-color: $dark-blue;
 }
 
@@ -96,8 +95,11 @@ footer {
     display: flex;
     justify-content: space-between;
     small {
-      color: #fff;
+      color: #e1e3e6;
       font-weight: normal;
+    }
+    a {
+      color: #7e8596;
     }
   }
 }

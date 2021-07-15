@@ -3,8 +3,25 @@
   margin: 0 auto;
 }
 
+.c {
+  width: 900px;
+  margin: 0 auto;
+  padding: 10px 0;
+  .title {
+    margin: 25px 0;
+    font-size: 25px;
+    color: $title;
+  }
+}
 .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.banner {
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
