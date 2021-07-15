@@ -46,10 +46,13 @@
         <h3>标题</h3>
         <p>2021-01-20</p>
       </div>
-      <el-button class="right" type="warning" size="mini" round plain
-        >更多</el-button
-      >
+      <el-button class="right" type="warning" size="mini" round>更多</el-button>
     </div>
+  </div>
+
+  <div class="pagination">
+    <el-pagination background layout="prev, pager, next" :total="1000">
+    </el-pagination>
   </div>
 </template>
 
@@ -117,31 +120,37 @@ export default {};
   width: 1110px;
   grid-template-columns: repeat(5, 20%);
   .item {
-    background-color: chartreuse;
+    background: url("mbg1.jpeg");
+    background-size: cover;
     border-radius: 10px;
     height: 280px;
     margin: 0 15px 35px 15px;
     display: flex;
     position: relative;
     .left {
-      height: 50px;
       position: absolute;
       left: 15px;
       bottom: 15px;
       h3 {
         font-weight: normal;
+        font-size: 14px;
         color: #fff;
       }
       p {
-        color: $content;
+        color: #bbbcbd;
       }
     }
     .right {
-      height: 30px;
+      background-color: $orange;
+      border-color: $orange;
       position: absolute;
       bottom: 20px;
       right: 15px;
+      font-weight: normal;
     }
   }
+}
+.pagination {
+  text-align: center;
 }
 </style>

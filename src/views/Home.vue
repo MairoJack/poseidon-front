@@ -121,6 +121,7 @@ export default {};
       }
     }
   }
+
   .pagination {
     margin-top: 40px;
     text-align: center;
