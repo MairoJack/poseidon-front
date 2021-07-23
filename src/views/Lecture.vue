@@ -22,17 +22,18 @@
   </el-row>
   <el-row class="c lecture-nav">
     <el-col :span="2">
-      <h3 class="title">全部</h3>
+      <h3 class="title" @click="handleSearch(-1)">全部</h3>
     </el-col>
     <el-col :span="18">
       <ul>
-        <li>
-          <a> amazon </a>
+        <li v-for="(item, index) in sites" :key="index">
+          <a
+            :class="{ checked: index === selectedSite }"
+            @click="handleSearch(index)"
+          >
+            {{ item }}
+          </a>
         </li>
-        <li><a>shoppe</a></li>
-        <li><a>lazada</a></li>
-        <li><a>wish</a></li>
-        <li><a>alibaba</a></li>
       </ul>
     </el-col>
     <el-col :span="4" class="more">
@@ -40,24 +41,93 @@
       <i class="el-icon-right right"></i>
     </el-col>
   </el-row>
-  <div class="c lecture-box">
-    <div class="item" v-for="o in 15" :key="o">
+  <div class="c lecture-box" v-loading="loading">
+    <div
+      class="item"
+      v-for="item in list"
+      :key="item.id"
+      :style="{
+        backgroundImage: 'url(' + imagePrefix + item.mainImage + ')',
+      }"
+    >
       <div class="left">
-        <h3>标题</h3>
-        <p>2021-01-20</p>
+        <h3>{{ item.name }}</h3>
+        <p>{{ item.date }}</p>
       </div>
       <el-button class="right" type="warning" size="mini" round>更多</el-button>
     </div>
   </div>
-
+  <el-empty v-if="list.length <= 0" description="暂无数据"></el-empty>
   <div class="pagination">
-    <el-pagination background layout="prev, pager, next" :total="1000">
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :current-page="pager.current"
+      :total="pager.total"
+      :page-size="15"
+      @current-change="handlePageChange"
+    >
     </el-pagination>
   </div>
 </template>
 
 <script>
-export default {};
+import { getLecturePage } from "@/api/index.js";
+import { reactive, onMounted, toRefs } from "vue";
+
+export default {
+  setup() {
+    const state = reactive({
+      list: [],
+      pager: {
+        current: 1,
+        total: 0,
+      },
+      query: {
+        name: "",
+        site: "",
+      },
+      loading: false,
+      imagePrefix: `${import.meta.env.VITE_APP_IMAGE_PREFIX}`,
+      sites: ["amazon", "shopee", "lazada", "wish", "alibaba"],
+      selectedSite: -1,
+    });
+
+    onMounted(() => {
+      fetchData();
+    });
+
+    const fetchData = () => {
+      state.loading = true;
+      getLecturePage(state.query).then((res) => {
+        state.list = res.records;
+        state.pager.total = res.total;
+      });
+      state.loading = false;
+    };
+
+    const handleSearch = (index) => {
+      state.selectedSite = index;
+      if (index !== -1) {
+        state.query.site = state.sites[index];
+      } else {
+        state.query.site = "";
+      }
+      fetchData();
+    };
+
+    const handlePageChange = (val) => {
+      state.current = val;
+      fetchData();
+    };
+
+    return {
+      ...toRefs(state),
+      handleSearch,
+      handlePageChange,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -98,6 +168,12 @@ export default {};
       a {
         color: $orange;
         font-size: 20px;
+        &:hover {
+          color: $dark-blue;
+        }
+      }
+      .checked {
+        color: $dark-blue;
       }
     }
   }
@@ -120,8 +196,7 @@ export default {};
   width: 1110px;
   grid-template-columns: repeat(5, 20%);
   .item {
-    background: url("mbg1.jpeg");
-    background-size: cover;
+    background-size: 100% 100%;
     border-radius: 10px;
     height: 280px;
     margin: 0 15px 35px 15px;
