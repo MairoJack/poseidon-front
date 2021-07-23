@@ -12,6 +12,17 @@ export function login(data) {
 }
 
 /**
+ * 注册
+ */
+export function register(data) {
+  return request({
+    url: "/api/users/register",
+    method: "post",
+    data,
+  });
+}
+
+/**
  * 获取登录人信息
  */
 export function getUserInfo() {

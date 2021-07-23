@@ -1,10 +1,10 @@
 <template>
-  <header class="w header-box">
+  <div class="w header-box">
     <h1>
       <router-link to="/" title="Poseidon"></router-link>
     </h1>
-    <p>登录</p>
-  </header>
+    <p>{{ isLogin ? "登录" : "注册" }}</p>
+  </div>
   <main class="main">
     <div class="left-box">
       <img src="icon/cm.png" />
@@ -13,12 +13,11 @@
     </div>
     <el-form
       v-if="isLogin"
-      class="right-box"
       :model="loginForm"
       :rules="rules"
       ref="validateForm"
       label-width="0px"
-      style="height: 400px"
+      class="right-box"
     >
       <p>登录</p>
       <el-form-item prop="username">
@@ -42,7 +41,7 @@
         </el-input>
       </el-form-item>
       <div class="login-btn">
-        <el-button :loading="loading" type="primary" @click="submitForm()"
+        <el-button :loading="loading" type="primary" @click="handleLogin()"
           >登录</el-button
         >
         <a>忘记密码</a>
@@ -99,7 +98,7 @@
         >
       </el-form-item>
       <div class="login-btn">
-        <el-button :loading="loading" type="primary" @click="submitForm()"
+        <el-button :loading="loading" type="primary" @click="handleRegister()"
           >注册</el-button
         >
       </div>
@@ -113,10 +112,16 @@
 </template>
 
 <script>
+import { login, register } from "@/api/index.js";
 import { reactive, toRefs, ref } from "vue";
-
+import { useStore } from "vuex";
+import { useRouter, useRoute } from "vue-router";
 export default {
   setup() {
+    const router = useRouter();
+    const route = useRoute();
+    const store = useStore();
+
     const validateForm = ref(null);
     const state = reactive({
       loading: false,
@@ -143,10 +148,26 @@ export default {
       state.loginForm.password = "";
       state.isLogin = !state.isLogin;
     };
+
+    const handleLogin = async () => {
+      state.loading = true;
+      try {
+        await validateForm.value.validate();
+        const res = await login(state.loginForm);
+        store.commit("SET_TOKEN", res);
+        router.push(route.query.redirect || "/");
+      } finally {
+        state.loading = false;
+      }
+    };
+    const handleRegister = () => {};
     return {
       ...toRefs(state),
       rules,
+      validateForm,
       changeLogin,
+      handleLogin,
+      handleRegister,
     };
   },
 };
@@ -174,10 +195,12 @@ export default {
   }
 }
 .main {
+  min-height: 500px;
   height: calc(100vh - 80px);
   background-color: $dark-blue;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   .left-box {
     margin-top: 80px;
     text-align: center;
@@ -186,25 +209,23 @@ export default {
       font-size: 56px;
     }
     p {
-      margin-top: 50px;
+      margin-top: 20px;
       font-size: 18px;
     }
   }
   .right-box {
-    padding: 30px;
-    margin-top: 60px;
+    padding: 20px 30px 0 30px;
+    margin-top: 30px;
     border-radius: 5px;
     box-shadow: 0 3px 10px 0 rgb(0 0 0 / 14%);
     background-color: white;
     width: 400px;
-    height: 500px;
     > p {
       color: $content;
       font-size: 24px;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
     }
     .login-btn {
-      margin-top: 40px;
       button {
         margin-bottom: 5px;
         width: 100%;

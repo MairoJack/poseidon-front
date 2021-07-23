@@ -13,11 +13,26 @@
           <router-link to="/service" title="海神服务">海神服务</router-link>
           <router-link to="/lecture" title="活动讲座">活动讲座</router-link>
           <router-link to="/answer" title="回答">回答</router-link>
-          <router-link to="/user" title="会员" style="width: 40px"
-            >会员</router-link
-          >
+          <el-dropdown v-if="$store.state.name">
+            <router-link to="/user" title="会员" style="width: 40px">{{
+              $store.state.name
+            }}</router-link>
+            <template #dropdown>
+              <el-dropdown-item>退出 </el-dropdown-item>
+            </template>
+          </el-dropdown>
+          <el-dropdown>
+            <span>sdsdsd</span>
+
+            <template #dropdown>
+              <el-dropdown-item>退出 </el-dropdown-item>
+              <el-dropdown-item>退出 </el-dropdown-item>
+              <el-dropdown-item>退出 </el-dropdown-item>
+              <el-dropdown-item>退出 </el-dropdown-item>
+            </template>
+          </el-dropdown>
         </div>
-        <div class="nav-aside">
+        <div class="nav-aside" v-if="!$store.state.name">
           <i class="el-icon-user-solid"></i>
           <router-link to="/login" title="登录">登录</router-link>
           |
