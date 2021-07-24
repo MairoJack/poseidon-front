@@ -18,17 +18,11 @@
               $store.state.name
             }}</router-link>
             <template #dropdown>
-              <el-dropdown-item>退出 </el-dropdown-item>
-            </template>
-          </el-dropdown>
-          <el-dropdown>
-            <span>sdsdsd</span>
-
-            <template #dropdown>
-              <el-dropdown-item>退出 </el-dropdown-item>
-              <el-dropdown-item>退出 </el-dropdown-item>
-              <el-dropdown-item>退出 </el-dropdown-item>
-              <el-dropdown-item>退出 </el-dropdown-item>
+              <el-dropdown-menu>
+                <el-dropdown-item @click="handleLogout"
+                  >退出登录</el-dropdown-item
+                >
+              </el-dropdown-menu>
             </template>
           </el-dropdown>
         </div>
@@ -43,7 +37,21 @@
   </header>
 </template>
 
-<script></script>
+<script>
+import { removeStore } from "@/utils/storage.js";
+export default {
+  setup() {
+    const handleLogout = () => {
+      removeStore("token");
+      location.reload();
+    };
+
+    return {
+      handleLogout,
+    };
+  },
+};
+</script>
 
 <style lang="scss" coped>
 .router-link-active {
@@ -94,7 +102,6 @@ header {
     align-items: center;
     margin-left: 10px;
     i {
-      margin-top: 2px;
       color: $orange;
     }
     a {

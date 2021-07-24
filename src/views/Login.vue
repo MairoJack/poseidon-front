@@ -80,11 +80,11 @@
           </template>
         </el-input>
       </el-form-item>
-      <el-form-item prop="password">
+      <el-form-item prop="checkPass">
         <el-input
           type="password"
           placeholder="请输入确认密码"
-          v-model="loginForm.password"
+          v-model="loginForm.checkPass"
           show-password
         >
           <template #prepend>
@@ -92,10 +92,11 @@
           </template>
         </el-input>
       </el-form-item>
-      <el-form-item prop="aggre">
-        <el-checkbox v-model="isAggre"
-          >我已阅读并同意遵守 法律声明 和 隐私条款</el-checkbox
-        >
+      <el-form-item prop="agree">
+        <el-checkbox
+          v-model="loginForm.agree"
+          label="我已阅读并同意遵守 法律声明 和 隐私条款"
+        ></el-checkbox>
       </el-form-item>
       <div class="login-btn">
         <el-button :loading="loading" type="primary" @click="handleRegister()"
@@ -128,24 +129,38 @@ export default {
       loginForm: {
         username: "",
         password: "",
+        checkPass: "",
+        agree: [],
       },
-      isAggre: false,
+
       isLogin: true,
     });
+
+    var validateCheckPass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== state.loginForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     const rules = {
-      username: [
+      username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+      password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+      checkPass: [{ validator: validateCheckPass, trigger: "blur" }],
+      agree: [
         {
+          type: "array",
           required: true,
-          message: "请输入用户名",
-          trigger: "blur",
+          message: "请勾选并同意",
+          trigger: "change",
         },
       ],
-      password: [{ required: true, message: "请输入密码", trigger: "blur" }],
     };
 
     const changeLogin = () => {
-      state.loginForm.username = "";
-      state.loginForm.password = "";
+      validateForm.value.resetFields();
       state.isLogin = !state.isLogin;
     };
 
@@ -160,7 +175,16 @@ export default {
         state.loading = false;
       }
     };
-    const handleRegister = () => {};
+    const handleRegister = async () => {
+      state.loading = true;
+      try {
+        await validateForm.value.validate();
+        const res = await register(state.loginForm);
+        state.isLogin = true;
+      } finally {
+        state.loading = false;
+      }
+    };
     return {
       ...toRefs(state),
       rules,

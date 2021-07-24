@@ -75,10 +75,10 @@ const router = createRouter({
   routes,
 });
 
-const whiteList = ["/login", "/college", "/service", "/lecture"];
+const authList = ["/user"];
 
 router.beforeEach((to, from, next) => {
-  document.title = '波塞冬-' + to.meta.title;
+  document.title = "波塞冬-" + to.meta.title;
   const token = getStore("token");
   if (token) {
     const name = store.state.name;
@@ -91,10 +91,10 @@ router.beforeEach((to, from, next) => {
       });
     }
   } else {
-    if (whiteList.indexOf(to.path) !== -1) {
-      next();
-    } else {
+    if (authList.indexOf(to.path) !== -1) {
       next(`/login?redirect=${to.path}`);
+    } else {
+      next();
     }
   }
 });
